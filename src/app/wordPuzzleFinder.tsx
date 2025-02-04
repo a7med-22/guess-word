@@ -84,6 +84,11 @@ const WordPuzzleFinder = () => {
     fetchWords();
   };
 
+  const handlePatternFocus = () => {
+    if (!length) {
+      setError("Word Length must be filled before entering pattern");
+    }
+  };
   return (
     <div className="flex flex-col items-center p-6 min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
       <h1 className="text-5xl font-extrabold mb-8 mt-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
@@ -103,7 +108,7 @@ const WordPuzzleFinder = () => {
               <input
                 type="text"
                 placeholder="e.g., AUL"
-                className="w-full p-4 text-lg bg-slate-700 rounded-lg border border-slate-600 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 text-white placeholder-slate-400 transition-all"
+                className="w-full p-4 text-lg bg-slate-700 rounded-lg outline-none text-white placeholder-slate-400 ring-1 ring-slate-600 focus:ring-offset-2 duration-200 transition-all"
                 value={letters}
                 onChange={(e) =>
                   setLetters(
@@ -120,7 +125,7 @@ const WordPuzzleFinder = () => {
               <input
                 type="text"
                 placeholder="e.g., CYT"
-                className="w-full p-4 text-lg bg-slate-700 rounded-lg border border-slate-600 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 text-white placeholder-slate-400 transition-all"
+                className="w-full p-4 text-lg bg-slate-700 rounded-lg outline-none text-white placeholder-slate-400 ring-1 ring-slate-600 focus:ring-offset-2 duration-200 transition-all"
                 value={excludedLetters}
                 onChange={(e) =>
                   setExcludedLetters(
@@ -138,8 +143,8 @@ const WordPuzzleFinder = () => {
               </label>
               <input
                 type="number"
-                placeholder="Optional length"
-                className="w-full p-4 text-lg bg-slate-700 rounded-lg border border-slate-600 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 text-white placeholder-slate-400 transition-all"
+                placeholder="length"
+                className="w-full p-4 text-lg bg-slate-700 rounded-lg outline-none text-white placeholder-slate-400 ring-1 ring-slate-600 focus:ring-offset-2 duration-200 transition-all"
                 value={length}
                 min="1"
                 max="15"
@@ -154,8 +159,9 @@ const WordPuzzleFinder = () => {
               <input
                 type="text"
                 placeholder="e.g., ??RA?"
-                className="w-full p-4 text-lg bg-slate-700 rounded-lg border border-slate-600 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 text-white placeholder-slate-400 transition-all"
+                className="w-full p-4 text-lg bg-slate-700 rounded-lg outline-none text-white placeholder-slate-400 ring-1 ring-slate-600 focus:ring-offset-2 duration-200 transition-all"
                 value={pattern}
+                onFocus={handlePatternFocus}
                 maxLength={Number(length)}
                 onChange={(e) =>
                   setPattern(
@@ -180,8 +186,7 @@ const WordPuzzleFinder = () => {
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
-              <span className="animate-spin">🌀</span>
-              Searching...
+              <span className="animate-spin">⏳</span> Searching...
             </span>
           ) : (
             "Find Words"
